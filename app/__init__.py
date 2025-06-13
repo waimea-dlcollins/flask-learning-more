@@ -50,6 +50,7 @@ def register_form():
 # User login form route
 #-----------------------------------------------------------
 @app.get("/login")
+
 def login_form():
     return render_template("pages/login.jinja")
 
@@ -69,7 +70,7 @@ def show_all_things():
             FROM things
             JOIN users ON things.user_id = users.id
 
-            ORDER BY things.name ASC
+            ORDER BY things.name ASC    
         """
         result = client.execute(sql)
         things = result.rows
