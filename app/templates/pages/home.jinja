@@ -22,7 +22,7 @@
     <p>this is a simple webstie that allows for users to create a to do list that can have anything that the user types in.</p>
 
     <ul>
-        <p><a href="https://www.google.com/imgres?q=notes%20icon&imgurl=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F9239%2F9239205.png&imgrefurl=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fnote_9239205&docid=83DTnrdc89hlaM&tbnid=mcop-Ua1YsOVRM&vet=12ahUKEwj98f3hq-2NAxWbZvUHHcS8HY4QM3oECBoQAA..i&w=512&h=512&hcb=2&ved=2ahUKEwj98f3hq-2NAxWbZvUHHcS8HY4QM3oECBoQAA"></a></p>
+        <p><a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV0QAKmj4y1hKCWHOjESOqXfYjL5O8U-JjaQ&s"></a></p>
     </ul>
 
 
@@ -34,13 +34,36 @@
 </article>
 
 <article>
-   <h1> compeleted tasks </h1>
+   <h1> Compeleted tasks </h1>
         <p>go home  </p>
         <p> farm some money</p>
         <p>charge phone </p>
 </article>
 
 
+<article>
+  <form action="/add-task" method="POST">
+    <h1>Add a task</h1>
+    <input
+      type="text"
+      name="task"
+      placeholder="task name"
+      required
+    >
+
+
+    <select name="priority" id="priority" required>
+      <option value="">Select priority</option>
+      <option value="5">5 "highest"</option>
+      <option value="4">4</option>
+      <option value="3">3</option>
+      <option value="2">2</option>
+      <option value="1">1 "lowest" </option>
+    </select>
+
+    <button>add task</button>
+  </form>
+</article>
 
 {% endblock %}
 
