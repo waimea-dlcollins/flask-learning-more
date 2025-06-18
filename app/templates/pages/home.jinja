@@ -19,7 +19,11 @@
 
     <h1>Welcome to my To Do List website.</h1>
 
-    <p>this is a simple webstie that allows for users to create a to do list that can have anything that the user types in.</p>
+    {% if session.user_name %}
+
+    <li>Current tasks for, {{ session.user_name }}</li>
+
+    {% endif %}
 
     <ul>
         <p><a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV0QAKmj4y1hKCWHOjESOqXfYjL5O8U-JjaQ&s"></a></p>
@@ -28,32 +32,55 @@
 
 <article>
    <h1> Current tasks to do </h1>
-        <p>Go to the shops </p>
-        <p>eat some food</p>
-        <p>rotate a chair</p>
+       
+  {% for task in tasks %}
+
+    <p>
+    <span class="priority">{{ task.priority }}</span> 
+    <span class="name">{{ task.name }}</span> 
+    </p>
+
+  {% else %}
+
+    <p>None!</p>
+
+  {% endfor %}
+
 </article>
 
 <article>
-   <h1> Compeleted tasks </h1>
-        <p>go home  </p>
-        <p> farm some money</p>
-        <p>charge phone </p>
+<h1> Completed tasks</h1>
+
+{% for task in tasks%}
+
+
+<p>
+    <span class="priority">{{ task.priority }}</span> 
+    <span class="name">{{ task.name }}</span> 
+    <span class="completed">{{ task.completed }}</span> 
+    </p>
+        
+  {% else %}
+
+    <p>None!</p>
+
+  {% endfor %}
 </article>
 
-
+  
 <article>
   <form action="/add-task" method="POST">
     <h1>Add a task</h1>
     <input
       type="text"
-      name="task"
+      name="name"
       placeholder="task name"
       required
     >
 
 
     <select name="priority" id="priority" required>
-      <option value="">Select priority</option>
+      <option value="" seelected disabled>Select priority</option>
       <option value="5">5 "highest"</option>
       <option value="4">4</option>
       <option value="3">3</option>

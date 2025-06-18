@@ -27,7 +27,17 @@ init_error(app)     # Handle errors and exceptions
 #-----------------------------------------------------------
 @app.get("/")
 def index():
-    return render_template("pages/home.jinja")
+    # Get logged in user's id
+    id = session["user_id"]
+
+    with connect_db() as client:
+        # Attempt to find an existing record for that user
+        sql = "SELECT id, name, priority, completed FROM tasks WHERE user_id = ?"
+        values = [id]
+        result = client.execute(sql, values)
+        tasks = result.rows
+
+    return render_template("pages/home.jinja", tasks=tasks)
 
 
 #-----------------------------------------------------------
@@ -56,20 +66,17 @@ def add_a_task():
     # Get the data from the form
     name  = request.form.get("name")
     priority = request.form.get("priority")
-    completed = request.form.get("completed")
 
     # Sanitise the inputs
     name = html.escape(name)
-    priority = html.escape(priority)
-    completed = html.escape(completed)
 
     # Get the id from the session
     user_id = session["user_id"]
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO tasks (name, priority, completed) VALUES (?, ?, ?)"
-        values = [name, priority, completed]
+        sql = "INSERT INTO tasks (name, priority, user_id) VALUES (?, ?, ?)"
+        values = [name, priority, user_id]
         client.execute(sql, values)
 
         # Go back to the home page
@@ -89,7 +96,7 @@ def delete_a_task(id):
 
     with connect_db() as client:
         # Delete the thing from the DB only if we own it
-        sql = "DELETE FROM things WHERE id=? AND user_id=?"
+        sql = "DELETE FROM tasks WHERE id=? AND user_id=?"
         values = [id, user_id]
         client.execute(sql, values)
 
